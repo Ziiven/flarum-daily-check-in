@@ -1,6 +1,6 @@
 {
     "name": "ziven/checkin",
-    "description": "A Flarum extension. Allow user to daily check in the forum and receive reward",
+    "description": "A Flarum extension. Add a button in the index page that allow user to daily check in the forum and receive reward.",
     "type": "flarum-extension",
     "require": {
         "flarum/core": "^1.4.0"
