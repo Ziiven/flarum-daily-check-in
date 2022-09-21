@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@ziven/checkin",
+  "name": "@ziiven/flarum-daily-check-in",
   "devDependencies": {
     "flarum-webpack-config": "^2.0.0",
     "webpack": "^5.65.0",

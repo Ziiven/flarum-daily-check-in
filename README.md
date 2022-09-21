@@ -11,13 +11,13 @@ A [Flarum](http://flarum.org) extension. Add a button in the index page that all
 Install with composer:
 
 ```sh
-composer require ziven/checkin
+composer require ziiven/flarum-daily-check-in:"*"
 ```
 
 ### Updating
 
 ```sh
-composer update ziven/checkin
+composer update ziiven/flarum-daily-check-in
 ```
 
 ### ScreenShot
