@@ -21,5 +21,5 @@ composer update ziven/checkin
 ```
 
 ### ScreenShot
-![image](https://user-images.githubusercontent.com/38845682/164683167-6d105413-d250-4528-83aa-31f1f27e1cb7.png)
-![image](https://user-images.githubusercontent.com/38845682/165077885-d908075a-3c95-4ecf-9fd7-5777cd4c194e.png)
+![image](https://user-images.githubusercontent.com/29644610/191474337-399c3e46-7469-43cf-9340-8fd5dfc02ace.jpg)
+![image](https://user-images.githubusercontent.com/29644610/191472984-5724b8ba-38cd-40cc-96ee-7d1ae94ab45c.jpg)
