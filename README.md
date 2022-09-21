@@ -1,4 +1,4 @@
-# Daily Check In
+# Daily Check In 每日签到
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 

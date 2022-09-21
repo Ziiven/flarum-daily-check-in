@@ -5,6 +5,10 @@
     "require": {
         "flarum/core": "^1.4.0"
     },
+    "support": {
+        "issues": "https://github.com/Ziiven/flarum-daily-check-in/issues",
+        "source": "https://github.com/Ziiven/flarum-daily-check-in"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
@@ -19,7 +23,7 @@
     ],
     "extra": {
         "flarum-extension": {
-            "title": "[Z] Daily Check In",
+            "title": "Ziven Daily Check In",
             "icon": {
                 "name": "fas fa-check-to-slot",
                 "backgroundColor": "#238c59",
