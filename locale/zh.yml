@@ -1,0 +1,10 @@
+ziven-checkin:
+  forum:
+    check-in: 签到
+    checked-in: 已签到
+    check-in-success: 签到成功
+  admin:
+    settings:
+      timezone: 时区设置
+      reward-money: 签到奖励
+      reward-money-requirement: 需要 <code>antoinefr/flarum-ext-money</code> 扩展

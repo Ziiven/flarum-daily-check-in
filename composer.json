@@ -1,0 +1,28 @@
+{
+    "name": "ziven/checkin",
+    "description": "A Flarum extension. Allow user to daily check in the forum and receive reward",
+    "type": "flarum-extension",
+    "require": {
+        "flarum/core": "^1.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ziven\\checkin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ziven"
+        }
+    ],
+    "extra": {
+        "flarum-extension": {
+            "title": "[Z] Daily Check In",
+            "icon": {
+                "name": "fas fa-check-to-slot",
+                "backgroundColor": "#238c59",
+                "color": "#fff"
+            }
+        }
+    }
+}
