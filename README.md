@@ -11,7 +11,7 @@ A [Flarum](http://flarum.org) extension. Add a button in the index page that all
 Install with composer:
 
 ```sh
-composer require ziiven/flarum-daily-check-in:"*"
+composer require ziiven/flarum-daily-check-in
 ```
 
 ### Updating
