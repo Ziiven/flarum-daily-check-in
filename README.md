@@ -18,6 +18,8 @@ composer require ziiven/flarum-daily-check-in
 
 ```sh
 composer update ziiven/flarum-daily-check-in
+php flarum migrate
+php flarum cache:clear
 ```
 
 ### ScreenShot
