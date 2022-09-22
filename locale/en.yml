@@ -1,7 +1,7 @@
 ziven-checkin:
   forum:
     check-in: Check In
-    checked-in: Checked In
+    checked-in: Checked In {count} Days
     check-in-success: Checked In 
   admin:
     settings:

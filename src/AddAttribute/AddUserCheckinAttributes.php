@@ -23,6 +23,7 @@ class AddUserCheckinAttributes
         $last_checkin_time = $user->last_checkin_time;
         $attributes = [];
         $attributes['lastCheckinTime'] = $user->last_checkin_time;
+        $attributes['totalContinuousCheckIn'] = $user->total_continuous_checkin_count;
 
         $timezone = $this->settings->get('ziven-forum-checkin.checkinTimeZone', 0);
         $time = time()+$timezone*60*60;

@@ -3,7 +3,7 @@
     "description": "A Flarum extension. Add a button in the index page that allow user to daily check in the forum and receive reward.",
     "type": "flarum-extension",
     "require": {
-        "flarum/core": "^1.4.0"
+        "flarum/core": "^1.0"
     },
     "support": {
         "issues": "https://github.com/Ziiven/flarum-daily-check-in/issues",

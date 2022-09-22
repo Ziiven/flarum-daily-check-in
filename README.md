@@ -21,5 +21,5 @@ composer update ziiven/flarum-daily-check-in
 ```
 
 ### ScreenShot
-![image](https://user-images.githubusercontent.com/29644610/191474337-399c3e46-7469-43cf-9340-8fd5dfc02ace.jpg)
+![image](https://user-images.githubusercontent.com/29644610/191722290-9a54b9c6-664d-4e82-9181-9a9a47ad476d.jpg)
 ![image](https://user-images.githubusercontent.com/29644610/191472984-5724b8ba-38cd-40cc-96ee-7d1ae94ab45c.jpg)
