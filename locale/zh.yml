@@ -1,7 +1,8 @@
 ziven-checkin:
   forum:
     check-in: 签到
-    checked-in: 已签到{count}天
+    checked-in-day: 已签到{count}天
+    checked-in-days: 已签到{count}天
     check-in-success: 签到成功
   admin:
     settings:

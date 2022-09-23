@@ -24,31 +24,40 @@ class doCheckin
     {
         $attributes = Arr::get($event->data, 'attributes', []);
 
-        if (array_key_exists('lastCheckinTime', $attributes)) {
+        if (array_key_exists('canCheckin', $attributes)) {
+            $canCheckin = true;
             $timezone = $this->settings->get('ziven-forum-checkin.checkinTimeZone', 0);
             $user = $event->user;
             $current_timestamp = time()+$timezone*60*60;
+            $current_data_at_midnight = strtotime(date('Y-m-d', $current_timestamp)." 00:00:00");
+            $last_checkin_time = $user->last_checkin_time;
 
-            $explode_checkin_data = explode(' ', $user->last_checkin_time);
-            $checkin_date_at_midnight = strtotime($explode_checkin_data[0]." 00:00:00");
-
-            app("log")->error(($current_timestamp-$checkin_date_at_midnight)/3600);
+            if($last_checkin_time!==null){
+                $explode_checkin_data = explode(' ', $last_checkin_time);
+                $checkin_date_at_midnight = strtotime($explode_checkin_data[0]." 00:00:00");
+                $canCheckin = $current_data_at_midnight>$checkin_date_at_midnight;
+            }
             
-            if(($current_timestamp-$checkin_date_at_midnight)/3600<48){
-                $user->total_continuous_checkin_count+=1;
-            }else{
-                $user->total_continuous_checkin_count=1;
+            if($canCheckin){
+                if(($current_timestamp-$checkin_date_at_midnight)/3600<48){
+                    $user->total_continuous_checkin_count+=1;
+                }else{
+                    $user->total_continuous_checkin_count=1;
+                }
+
+                $user->last_checkin_time = date('Y-m-d H:i:s', $current_timestamp);
+                $user->total_checkin_count+=1;
+
+                // app("log")->error($canCheckin);
+                // app("log")->error($user->total_continuous_checkin_count);
+
+                if(isset($user->money)===true){
+                    $checkinRewardMoney = (float)$this->settings->get('ziven-forum-checkin.checkinRewardMoney', 0);
+                    $user->money+=$checkinRewardMoney;
+                }
+
+                $this->events->dispatch(new checkinUpdated($user));
             }
-
-            $user->last_checkin_time = date('Y-m-d H:i:s', $current_timestamp);
-            $user->total_checkin_count+=1;
-
-            if(isset($user->money)===true){
-                $checkinRewardMoney = (float)$this->settings->get('ziven-forum-checkin.checkinRewardMoney', 0);
-                $user->money+=$checkinRewardMoney;
-            }
-
-            $this->events->dispatch(new checkinUpdated($user));
         }
     }
 }

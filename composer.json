@@ -2,6 +2,7 @@
     "name": "ziiven/flarum-daily-check-in",
     "description": "A Flarum extension. Add a button in the index page that allow user to daily check in the forum and receive reward.",
     "type": "flarum-extension",
+    "license": "MIT",
     "require": {
         "flarum/core": "^1.0"
     },
