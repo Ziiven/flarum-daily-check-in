@@ -2,6 +2,7 @@ import { extend } from 'flarum/extend';
 import IndexPage from 'flarum/forum/components/IndexPage';
 import Button from 'flarum/components/Button';
 import Alert from 'flarum/common/components/Alert';
+import checkInSuccessModal from './components/checkInSuccessModal';
 
 app.initializers.add('ziven-checkin', () => {
   extend(IndexPage.prototype, 'sidebarItems', function(items) {
@@ -10,25 +11,52 @@ app.initializers.add('ziven-checkin', () => {
       const canCheckin = app.session.user.attribute("canCheckin");
       const canCheckinContinuous = app.session.user.attribute("canCheckinContinuous");
       const serverData = app.session.user.attribute("serverDate");
+      const forumCheckinSuccessPromptType = app.forum.attribute("forumCheckinSuccessPromptType");
       let lastCheckinTime = app.session.user.attribute("lastCheckinTime");
-      let checkinButton,checkinButtonText;
+      let checkinButtonText;
 
       if(canCheckin===true){
         checkinButtonText = app.translator.trans('ziven-checkin.forum.check-in');
-        checkinButton = items.add('forum-checkin', Button.component({
+        items.add('forum-checkin', Button.component({
           icon: 'fas fa-calendar',
           className: 'Button CheckInButton--yellow',
           itemClassName: 'App-primaryControl',
           onclick: () => {
             app.session.user.save({canCheckin:false,totalContinuousCheckIn:canCheckinContinuous===true?totalContinuousCheckIn+1:1});
-            //const alertKey = app.alerts.show(Alert, { type: 'success' }, app.translator.trans('签到成功'));
+
+            const forumCheckinSuccessPromptText = app.forum.attribute("forumCheckinSuccessPromptText");
+            const forumCheckinSuccessPromptRewardText = app.forum.attribute("forumCheckinSuccessPromptRewardText");
+
+            if(forumCheckinSuccessPromptText!=="" || forumCheckinSuccessPromptRewardText!==""){
+              if(forumCheckinSuccessPromptType===1){
+                const forumCheckinRewarMoney = app.forum.attribute("forumCheckinRewarMoney");
+                const moneyExtensionExist = app.forum.attribute('antoinefr-money.moneyname')!==undefined;
+
+                let moneyName = "";
+                let rewardText = "";
+
+                if(forumCheckinSuccessPromptText!==""){
+                  const checkInSuccessText = forumCheckinSuccessPromptText.replace('[days]', totalContinuousCheckIn);
+                  const successTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessText);
+                }
+
+                if(moneyExtensionExist===true && forumCheckinSuccessPromptRewardText!==""){
+                  moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
+                  rewardText = moneyName.replace('[money]', forumCheckinRewarMoney);
+
+                  const checkInSuccessRewardText = forumCheckinSuccessPromptRewardText.replace('[reward]', rewardText);
+                  const successRewardTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessRewardText);
+                }
+
+              }else if(forumCheckinSuccessPromptType===2){
+                app.modal.show(checkInSuccessModal);
+              }
+            }
           }
         }, checkinButtonText),50);
       }else{
-        console.log(app.session.user.attribute("lastCheckinTime"));
-        console.log(app.session.user.attribute("totalContinuousCheckIn"));
         checkinButtonText = totalContinuousCheckIn<=1?app.translator.trans('ziven-checkin.forum.checked-in-day', {count: totalContinuousCheckIn}):app.translator.trans('ziven-checkin.forum.checked-in-days', {count: totalContinuousCheckIn});
-        checkinButton = items.add('forum-checkin', Button.component({
+        items.add('forum-checkin', Button.component({
           icon: 'fas fa-calendar-check',
           className: 'Button CheckInButton--green',
           itemClassName: 'App-primaryControl',
