@@ -15,7 +15,9 @@ return [
     (new Extend\Event())->listen(Saving::class, [doCheckin::class, 'checkinSaved']),
     (new Extend\ApiSerializer(UserSerializer::class))->attributes(AddUserCheckinAttributes::class),
     (new Extend\Settings())
-        ->serializeToForum('forumCheckinRewarMoney', 'ziven-forum-checkin.checkinRewardMoney', 'intval', 1)
+        ->serializeToForum('forumCheckinRewarMoney', 'ziven-forum-checkin.checkinRewardMoney',function ($raw) {
+            return (float)$raw;
+        })
         ->serializeToForum('forumCheckinTimeZone', 'ziven-forum-checkin.checkinTimeZone', 'intval', 0)
         ->serializeToForum('forumCheckinSuccessPromptType', 'ziven-forum-checkin.checkinSuccessPromptType', 'intval', 0)
         ->serializeToForum('forumCheckinSuccessPromptText', 'ziven-forum-checkin.checkinSuccessPromptText', 'strval')
