@@ -18,6 +18,16 @@ app.initializers.add('ziven-checkin', () => {
       type: 'number',
     })
     .registerSetting({
+      setting: 'ziven-forum-checkin.autoCheckIn',
+      label: app.translator.trans('ziven-checkin.admin.settings.auto-check-in'),
+      type: 'switch',
+    })
+    .registerSetting({
+      setting: 'ziven-forum-checkin.autoCheckInDelay',
+      label: app.translator.trans('ziven-checkin.admin.settings.auto-check-in-delay'),
+      type: 'number',
+    })
+    .registerSetting({
       setting: 'ziven-forum-checkin.checkinSuccessPromptType',
       label: app.translator.trans('ziven-checkin.admin.settings.check-in-success-prompt-type'),
       type: 'select',

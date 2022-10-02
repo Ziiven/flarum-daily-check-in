@@ -21,6 +21,7 @@ app.initializers.add('ziven-checkin', () => {
           icon: 'fas fa-calendar',
           className: 'Button CheckInButton--yellow',
           itemClassName: 'App-primaryControl',
+          id:"checkInButton",
           onclick: () => {
             app.session.user.save({canCheckin:false,totalContinuousCheckIn:canCheckinContinuous===true?totalContinuousCheckIn+1:1});
 
@@ -54,6 +55,15 @@ app.initializers.add('ziven-checkin', () => {
             }
           }
         }, checkinButtonText),50);
+
+        const forumAutoCheckIn = app.forum.attribute("forumAutoCheckin");
+        const forumAutoCheckInDelay = app.forum.attribute("forumAutoCheckinDelay");
+
+        if(forumAutoCheckIn===1){
+          setTimeout(function(){
+            $("#checkInButton").click();
+          },forumAutoCheckInDelay);
+        }
       }else{
         checkinButtonText = totalContinuousCheckIn<=1?app.translator.trans('ziven-checkin.forum.checked-in-day', {count: totalContinuousCheckIn}):app.translator.trans('ziven-checkin.forum.checked-in-days', {count: totalContinuousCheckIn});
         items.add('forum-checkin', Button.component({

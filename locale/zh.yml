@@ -6,6 +6,8 @@ ziven-checkin:
     check-in-success: 签到成功
   admin:
     settings:
+      auto-check-in: 自动签到
+      auto-check-in-delay: 自动签到延迟（毫秒）
       timezone: 时区设置
       reward-money: 签到奖励
       reward-money-requirement: 需要 <code>antoinefr/flarum-ext-money</code> 扩展
