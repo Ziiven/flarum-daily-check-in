@@ -24,6 +24,18 @@ class AddUserCheckinAttributes
         $attributes = [];
         $attributes['lastCheckinTime'] = $user->last_checkin_time;
         $attributes['totalContinuousCheckIn'] = $user->total_continuous_checkin_count;
+        $attributes['checkInCompatibleExtensions'] = [];
+
+        $extensions_enabled = json_decode($this->settings->get('extensions_enabled'));
+        $compatibleCheckList = array("fof-follow-tags");
+
+        foreach ($compatibleCheckList as $key => $value) {
+            $fof_follow_tags = array_search($value, $extensions_enabled);
+
+            if($fof_follow_tags!==false){
+                array_push($attributes['checkInCompatibleExtensions'],$value);
+            }
+        }
 
         $timezone = $this->settings->get('ziven-forum-checkin.checkinTimeZone', 0);
         $time = time()+$timezone*60*60;
