@@ -7,17 +7,27 @@ import checkInSuccessModal from './components/checkInSuccessModal';
 app.initializers.add('ziven-checkin', () => {
   extend(IndexPage.prototype, 'sidebarItems', function(items) {
     if(app.session.user!==null){
+      const routeName = app.current.get('routeName');
+
       const totalContinuousCheckIn = app.session.user.attribute("totalContinuousCheckIn");
       const canCheckin = app.session.user.attribute("canCheckin");
       const canCheckinContinuous = app.session.user.attribute("canCheckinContinuous");
       const serverData = app.session.user.attribute("serverDate");
       const forumCheckinSuccessPromptType = app.forum.attribute("forumCheckinSuccessPromptType");
+      let checkInCompatibleExtensions = app.session.user.attribute("checkInCompatibleExtensions");
       let lastCheckinTime = app.session.user.attribute("lastCheckinTime");
       let checkinButtonText;
+      let itemName = "forum-checkin";
+
+      if(routeName==="tag"){
+        if(checkInCompatibleExtensions.indexOf("fof-follow-tags")!==-1){
+            itemName = "forum-checkin-1";
+        }
+      }
 
       if(canCheckin===true){
         checkinButtonText = app.translator.trans('ziven-checkin.forum.check-in');
-        items.add('forum-checkin', Button.component({
+        items.add(itemName, Button.component({
           icon: 'fas fa-calendar',
           className: 'Button CheckInButton--yellow',
           itemClassName: 'App-primaryControl',
@@ -66,7 +76,7 @@ app.initializers.add('ziven-checkin', () => {
         }
       }else{
         checkinButtonText = totalContinuousCheckIn<=1?app.translator.trans('ziven-checkin.forum.checked-in-day', {count: totalContinuousCheckIn}):app.translator.trans('ziven-checkin.forum.checked-in-days', {count: totalContinuousCheckIn});
-        items.add('forum-checkin', Button.component({
+        items.add(itemName, Button.component({
           icon: 'fas fa-calendar-check',
           className: 'Button CheckInButton--green',
           itemClassName: 'App-primaryControl',
