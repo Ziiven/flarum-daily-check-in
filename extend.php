@@ -6,7 +6,7 @@ use Flarum\Api\Serializer\UserSerializer;
 use Ziven\checkin\AddAttribute\AddUserCheckinAttributes;
 use Ziven\checkin\Listeners\doCheckin;
 
-$extend = [
+return [
     (new Extend\Frontend('admin'))->js(__DIR__.'/js/dist/admin.js'),
     (new Extend\Frontend('forum'))->js(__DIR__ . '/js/dist/forum.js')->css(__DIR__.'/less/forum.less'),
 
@@ -23,7 +23,5 @@ $extend = [
         ->serializeToForum('forumCheckinTimeZone', 'ziven-forum-checkin.checkinTimeZone', 'intval', 0)
         ->serializeToForum('forumCheckinSuccessPromptType', 'ziven-forum-checkin.checkinSuccessPromptType', 'intval', 0)
         ->serializeToForum('forumCheckinSuccessPromptText', 'ziven-forum-checkin.checkinSuccessPromptText', 'strval')
-        ->serializeToForum('forumCheckinSuccessPromptRewardText', 'ziven-forum-checkin.checkinSuccessPromptRewardText', 'strval'),
+        ->serializeToForum('forumCheckinSuccessPromptRewardText', 'ziven-forum-checkin.checkinSuccessPromptRewardText', 'strval')
 ];
-
-return $extend;
