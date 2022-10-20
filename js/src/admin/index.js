@@ -56,4 +56,13 @@ app.initializers.add('ziven-checkin', () => {
         </div>
       );
     })
+    .registerPermission(
+      {
+        icon: 'fas fa-id-card',
+        label: app.translator.trans('ziven-checkin.admin.settings.allow-check-in'),
+        permission: 'checkin.allowCheckIn',
+      },
+      'moderate',
+      90
+    )
 });

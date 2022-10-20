@@ -6,7 +6,7 @@ import checkInSuccessModal from './components/checkInSuccessModal';
 
 app.initializers.add('ziven-checkin', () => {
   extend(IndexPage.prototype, 'sidebarItems', function(items) {
-    if(app.session.user!==null){
+    if(app.session.user!==null && app.forum.attribute('allowCheckIn')===true){
       const routeName = app.current.get('routeName');
 
       const totalContinuousCheckIn = app.session.user.attribute("totalContinuousCheckIn");

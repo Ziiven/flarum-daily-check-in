@@ -9,19 +9,20 @@ use Flarum\User\Event\Saving;
 use Ziven\checkin\Event\checkinUpdated;
 use Illuminate\Support\Arr;
 
-class doCheckin
-{
+class doCheckin{
     protected $settings;
     protected $events;
 
-    public function __construct(SettingsRepositoryInterface $settings, Dispatcher $events)
-    {
+    public function __construct(SettingsRepositoryInterface $settings, Dispatcher $events){
         $this->settings = $settings;
         $this->events = $events;
     }
 
-    public function checkinSaved(Saving $event)
-    {
+    public function checkinSaved(Saving $event){
+        $actor = $event->actor;
+        $user = $event->user;
+        $actor->assertCan('checkin.allowCheckIn', $user);
+
         $attributes = Arr::get($event->data, 'attributes', []);
 
         if (array_key_exists('canCheckin', $attributes)) {
@@ -30,7 +31,6 @@ class doCheckin
             $current_timestamp = time()+$timezone*60*60;
             $current_data_at_midnight = strtotime(date('Y-m-d', $current_timestamp)." 00:00:00");
             
-            $user = $event->user;
             $last_checkin_time = $user->last_checkin_time;
 
             if($last_checkin_time!==null){
