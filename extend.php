@@ -14,8 +14,7 @@ $extend = [
 
     (new Extend\Locales(__DIR__ . '/locale')),
 
-    (new Extend\Policy())
-        ->modelPolicy(User::class, UserPolicy::class),
+    (new Extend\Policy())->modelPolicy(User::class, UserPolicy::class),
 
     (new Extend\Event())->listen(Saving::class, [doCheckin::class, 'checkinSaved']),
     (new Extend\ApiSerializer(UserSerializer::class))->attributes(AddUserCheckinAttributes::class),
