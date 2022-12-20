@@ -28,7 +28,7 @@ class doCheckin{
 
             if (array_key_exists('canCheckin', $attributes)) {
                 $canCheckin = true;
-                $timezone = $this->settings->get('ziven-forum-checkin.checkinTimeZone', 0);
+                $timezone = intval($this->settings->get('ziven-forum-checkin.checkinTimeZone', 0));
                 $current_timestamp = time()+$timezone*60*60;
                 $current_data_at_midnight = strtotime(date('Y-m-d', $current_timestamp)." 00:00:00");
                 
