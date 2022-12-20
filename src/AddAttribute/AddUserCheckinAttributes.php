@@ -37,10 +37,10 @@ class AddUserCheckinAttributes
             }
         }
 
-        $timezone = $this->settings->get('ziven-forum-checkin.checkinTimeZone', 0);
+        $timezone = intval($this->settings->get('ziven-forum-checkin.checkinTimeZone', 0));
         $time = time()+$timezone*60*60;
 
-        $timedifference = (strtotime(date('Y-m-d', $time)." 23:59:59") - strtotime($last_checkin_time))/3600;
+        $timedifference = (strtotime(date('Y-m-d', null)." 23:59:59") - strtotime($last_checkin_time))/3600;
         $attributes['canCheckin'] = $last_checkin_time===null?true:$timedifference>=24;
         $attributes['canCheckinContinuous'] = $timedifference<48;
 

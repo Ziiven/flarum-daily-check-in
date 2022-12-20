@@ -2,20 +2,21 @@ import Modal from 'flarum/components/Modal';
 import Button from 'flarum/components/Button';
 import Stream from 'flarum/utils/Stream';
 
-export default class checkInSuccessModal extends Modal {
+export default class checkInResultModal extends Modal {
   oninit(vnode) {
     super.oninit(vnode);
   }
 
   className() {
-    return 'checkInSuccessModal Modal--small';
+    return 'checkInResultModal Modal--small';
   }
 
   title() {
-    return (<div className="checkInSuccessModal successTitleText">{app.translator.trans('ziven-checkin.forum.check-in-success')}</div>);
+    return (<div className="checkInResultModal successTitleText">{app.translator.trans('ziven-checkin.forum.check-in-success')}</div>);
   }
 
   content() {
+    //
     const totalContinuousCheckIn = app.session.user.attribute("totalContinuousCheckIn");
     const forumCheckinSuccessPromptText = app.forum.attribute("forumCheckinSuccessPromptText");
     const forumCheckinSuccessPromptRewardText = app.forum.attribute("forumCheckinSuccessPromptRewardText");
@@ -24,17 +25,17 @@ export default class checkInSuccessModal extends Modal {
 
     let moneyName = "";
     let rewardText = "";
-    let successTextClassName = "checkInSuccessModal hideText";
-    let rewardTextClassName = "checkInSuccessModal hideText";
+    let successTextClassName = "checkInResultModal hideText";
+    let rewardTextClassName = "checkInResultModal hideText";
 
     if(forumCheckinSuccessPromptText!==""){
-      successTextClassName = "checkInSuccessModal successText";
+      successTextClassName = "checkInResultModal successText";
     }
 
     if(moneyExtensionExist===true && forumCheckinSuccessPromptRewardText!==""){
       moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
       rewardText = moneyName.replace('[money]', forumCheckinRewarMoney);
-      rewardTextClassName = "checkInSuccessModal rewardText";
+      rewardTextClassName = "checkInResultModal rewardText";
     }
 
     return (

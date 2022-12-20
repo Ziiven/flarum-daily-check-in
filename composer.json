@@ -26,7 +26,7 @@
         "flarum-extension": {
             "title": "Ziven Daily Check In",
             "icon": {
-                "name": "fas fa-check-to-slot",
+                "name": "fas fa-calendar-check",
                 "backgroundColor": "#238c59",
                 "color": "#fff"
             }

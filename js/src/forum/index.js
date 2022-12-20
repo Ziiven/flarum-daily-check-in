@@ -3,6 +3,7 @@ import IndexPage from 'flarum/forum/components/IndexPage';
 import Button from 'flarum/components/Button';
 import Alert from 'flarum/common/components/Alert';
 import checkInSuccessModal from './components/checkInSuccessModal';
+import checkInFailedModal from './components/checkInFailedModal';
 
 app.initializers.add('ziven-checkin', () => {
   extend(IndexPage.prototype, 'sidebarItems', function(items) {
@@ -33,36 +34,44 @@ app.initializers.add('ziven-checkin', () => {
           itemClassName: 'App-primaryControl',
           id:"checkInButton",
           onclick: () => {
-            app.session.user.save({canCheckin:false,totalContinuousCheckIn:canCheckinContinuous===true?totalContinuousCheckIn+1:1});
+            app.session.user.save({canCheckin:false,totalContinuousCheckIn:canCheckinContinuous===true?totalContinuousCheckIn+1:1}).then(() => {
+              const forumCheckinSuccessPromptText = app.forum.attribute("forumCheckinSuccessPromptText");
+              const forumCheckinSuccessPromptRewardText = app.forum.attribute("forumCheckinSuccessPromptRewardText");
+              const canCheckinRecheck = app.session.user.attribute("canCheckin");
 
-            const forumCheckinSuccessPromptText = app.forum.attribute("forumCheckinSuccessPromptText");
-            const forumCheckinSuccessPromptRewardText = app.forum.attribute("forumCheckinSuccessPromptRewardText");
+              if(forumCheckinSuccessPromptText!=="" || forumCheckinSuccessPromptRewardText!==""){
+                if(forumCheckinSuccessPromptType===1){
+                  if(canCheckinRecheck===false){
+                    const forumCheckinRewarMoney = app.forum.attribute("forumCheckinRewarMoney");
+                    const moneyExtensionExist = app.forum.attribute('antoinefr-money.moneyname')!==undefined;
 
-            if(forumCheckinSuccessPromptText!=="" || forumCheckinSuccessPromptRewardText!==""){
-              if(forumCheckinSuccessPromptType===1){
-                const forumCheckinRewarMoney = app.forum.attribute("forumCheckinRewarMoney");
-                const moneyExtensionExist = app.forum.attribute('antoinefr-money.moneyname')!==undefined;
+                    let moneyName = "";
+                    let rewardText = "";
 
-                let moneyName = "";
-                let rewardText = "";
+                    if(forumCheckinSuccessPromptText!==""){
+                      const checkInSuccessText = forumCheckinSuccessPromptText.replace('[days]', totalContinuousCheckIn);
+                      const successTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessText);
+                    }
 
-                if(forumCheckinSuccessPromptText!==""){
-                  const checkInSuccessText = forumCheckinSuccessPromptText.replace('[days]', totalContinuousCheckIn);
-                  const successTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessText);
+                    if(moneyExtensionExist===true && forumCheckinSuccessPromptRewardText!==""){
+                      moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
+                      rewardText = moneyName.replace('[money]', forumCheckinRewarMoney);
+
+                      const checkInSuccessRewardText = forumCheckinSuccessPromptRewardText.replace('[reward]', rewardText);
+                      const successRewardTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessRewardText);
+                    }
+                  }else{
+                    const failedTextAlertKey = app.alerts.show(Alert, { type: 'error' }, app.translator.trans('ziven-checkin.forum.check-in-failed')+" "+app.translator.trans('ziven-checkin.forum.try-again-later'));
+                  }
+                }else if(forumCheckinSuccessPromptType===2){
+                  if(canCheckinRecheck===false){
+                    app.modal.show(checkInSuccessModal);
+                  }else{
+                    app.modal.show(checkInFailedModal);
+                  }
                 }
-
-                if(moneyExtensionExist===true && forumCheckinSuccessPromptRewardText!==""){
-                  moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
-                  rewardText = moneyName.replace('[money]', forumCheckinRewarMoney);
-
-                  const checkInSuccessRewardText = forumCheckinSuccessPromptRewardText.replace('[reward]', rewardText);
-                  const successRewardTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessRewardText);
-                }
-
-              }else if(forumCheckinSuccessPromptType===2){
-                app.modal.show(checkInSuccessModal);
               }
-            }
+            });
           }
         }, checkinButtonText),50);
 
