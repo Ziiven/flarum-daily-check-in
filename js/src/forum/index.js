@@ -49,7 +49,7 @@ app.initializers.add('ziven-checkin', () => {
                     let rewardText = "";
 
                     if(forumCheckinSuccessPromptText!==""){
-                      const checkInSuccessText = forumCheckinSuccessPromptText.replace('[days]', totalContinuousCheckIn);
+                      const checkInSuccessText = forumCheckinSuccessPromptText.replace('[days]', app.session.user.attribute("totalContinuousCheckIn"));
                       const successTextAlertKey = app.alerts.show(Alert, { type: 'success' }, checkInSuccessText);
                     }
 
