@@ -33,10 +33,10 @@ class doCheckin{
                 $current_data_at_midnight = strtotime(date('Y-m-d', $current_timestamp)." 00:00:00");
                 
                 $last_checkin_time = $user->last_checkin_time;
+                $explode_checkin_data = explode(' ', $last_checkin_time);
+                $checkin_date_at_midnight = strtotime($explode_checkin_data[0]." 00:00:00");
 
                 if($last_checkin_time!==null){
-                    $explode_checkin_data = explode(' ', $last_checkin_time);
-                    $checkin_date_at_midnight = strtotime($explode_checkin_data[0]." 00:00:00");
                     $canCheckin = $current_data_at_midnight>$checkin_date_at_midnight;
                 }
                 
